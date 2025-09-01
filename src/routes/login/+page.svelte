@@ -1,19 +1,39 @@
 <script>
-    let { form } = $props();
+	let { form } = $props();
 	import { enhance } from '$app/forms';
 </script>
 
-<div class="min-h-screen flex justify-center items-center bg-gray-100">
-	<form action="?/login" method="POST" use:enhance class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-		<h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Login</h1>
-		
-		<label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-Mail</label>
-		<input type="text" name="email" id="email" required class="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+<div class="flex min-h-screen items-center justify-center bg-gray-100">
+	<form
+		action="?/login"
+		method="POST"
+		use:enhance
+		class="w-full max-w-md rounded-lg bg-white p-8 shadow-lg"
+	>
+		<h1 class="mb-6 text-center text-2xl font-semibold text-gray-800">Login</h1>
 
-		<label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-		<input type="password" name="password" id="password" required class="w-full p-3 border border-gray-300 rounded-lg mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+		<label for="email" class="mb-2 block text-sm font-medium text-gray-700">E-Mail</label>
+		<input
+			type="text"
+			name="email"
+			id="email"
+			required
+			class="mb-4 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+		/>
 
-		<button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Login</button>
-        
+		<label for="password" class="mb-2 block text-sm font-medium text-gray-700">Password</label>
+		<input
+			type="password"
+			name="password"
+			id="password"
+			required
+			class="mb-6 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+		/>
+
+		<button
+			type="submit"
+			class="w-full rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+			>Login</button
+		>
 	</form>
 </div>

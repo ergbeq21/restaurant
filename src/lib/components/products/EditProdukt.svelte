@@ -18,12 +18,12 @@
 			use:enhance={() => {
 				return async ({ update }) => {
 					await update({ reset: false });
-                    open = false;
+					open = false;
 				};
 			}}
 		>
 			<div class="space-y-3">
-                <input type="hidden" value={produkt.id} name="id" />
+				<input type="hidden" value={produkt.id} name="id" />
 				<input type="text" bind:value={name} name="name" class="w-full rounded-lg border p-2" />
 
 				<input

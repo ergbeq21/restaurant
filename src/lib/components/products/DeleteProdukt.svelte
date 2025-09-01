@@ -14,7 +14,7 @@
 			use:enhance={() => {
 				return async ({ update }) => {
 					await update({ reset: false });
-                    open = false;
+					open = false;
 				};
 			}}
 		>

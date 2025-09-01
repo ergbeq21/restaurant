@@ -5,8 +5,9 @@
 	let { data } = $props();
 </script>
 
-
-<header class="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 shadow-sm">
+<header
+	class="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 shadow-sm"
+>
 	<div class="flex items-center gap-2">
 		<PackageOpen class="text-blue-600" size={28} />
 		<h1 class="text-2xl font-bold text-gray-800">Unsere Produkts</h1>
@@ -18,7 +19,6 @@
 		<LogIn size={18} /> Login
 	</a>
 </header>
-
 
 <main class="px-6 py-8">
 	<section>
