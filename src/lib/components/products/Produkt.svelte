@@ -17,26 +17,39 @@
 {/if}
 
 
-<div class="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-	<h2 class="text-lg font-semibold text-gray-900">{produkt.name}</h2>
-	<p class="text-sm text-gray-600">{produkt.beschreibung}</p>
-	<p class="text-sm font-medium text-gray-800">{produkt.preis}</p>
+<div class="flex flex-col gap-1 border border-gray-200 bg-white">
+		<img 
+			src={produkt.bild_url} 
+			alt={produkt.name} 
+			class="h-40 w-full object-cover"
+		/>
 
-    {#if isForAdmin}
-	<div class="mt-3 flex gap-2">
-		<button
-			onclick={() => (openEditProdukt = true)}
-			class="flex cursor-pointer items-center gap-2 rounded-lg p-2 text-sm font-medium text-blue-600 shadow "
-		>
-			<SquarePen size={20} />
-		</button>
+	<div class="flex flex-row justify-between items-end">
 
-		<button
-			onclick={() => (openDeleteProdukt = true)}
-			class="flex  cursor-pointer items-center gap-2 rounded-lg p-2 text-sm font-medium text-red-600 shadow "
-		>
-			<Trash2 size={20} />
-		</button>
+	<div class="flex flex-col gap-1 p-2">
+		<h2 class="text-lg font-semibold text-gray-900 line-clamp-1">{produkt.name}</h2>
+		<p class="text-base font-semibold text-gray-800 mt-1">{produkt.preis} €</p>
+		<p>{produkt.category}</p>
 	</div>
-    {/if}
+
+	{#if isForAdmin}
+		<div class="mt-2 flex gap-2">
+			<button
+				onclick={() => (openEditProdukt = true)}
+				class="flex items-center justify-center rounded-lg p-2 text-blue-600 hover:bg-blue-50 transition"
+				aria-label="Edit"
+			>
+				<SquarePen size={20} />
+			</button>
+
+			<button
+				onclick={() => (openDeleteProdukt = true)}
+				class="flex items-center justify-center rounded-lg p-2 text-red-600 hover:bg-red-50 transition"
+				aria-label="Delete"
+			>
+				<Trash2 size={20} />
+			</button>
+		</div>
+	{/if}
+	</div>
 </div>

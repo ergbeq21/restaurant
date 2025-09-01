@@ -1,5 +1,7 @@
 import { createConnection } from '$lib/db/mysql';
 import { redirect } from '@sveltejs/kit';
+import { put } from '@vercel/blob';
+import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export async function load({locals}) {
 
@@ -8,10 +10,12 @@ export async function load({locals}) {
 	}
 
 	const connection = await createConnection();
-	const [productRows] = await connection.execute('SELECT * FROM items;');
+	const [productRows] = await connection.execute('SELECT items.name, items.beschreibung, items.preis, items.bild_url, categories.name as category FROM items join categories on items.kategorie_id = categories.id;');
+    const [categoryRows] = await connection.execute('SELECT * FROM categories;');
 
 	return {
-		products: productRows
+		products: productRows,
+        categories: categoryRows
 	};
 }
 
@@ -47,12 +51,38 @@ export const actions = {
         const name = formData.get('name');
         const description = formData.get('description');
         const price = Number(formData.get('price'));
+        const category = formData.get('category');
+        const image = formData.get('image');
+
+		console.log(image);
+		const { url } = await put('restaurant_app/' + image.name, image, {
+			access: 'public',
+			token: BLOB_READ_WRITE_TOKEN,
+            allowOverwrite: true
+		});
 
         const connection = await createConnection();
 
         await connection.execute(
-            'INSERT INTO items (name, beschreibung, preis) VALUES (?, ?, ?)',
-            [name, description, price]
+            'INSERT INTO items (name, beschreibung, preis,bild_url, kategorie_id) VALUES (?, ?, ?, ?, ?)',
+            [name, description, price, url, category]
+        );
+
+        return { success: true };
+    },
+    createCategory: async ({ request }) => {
+        const formData = await request.formData();
+
+        const name = formData.get('name');
+
+        if(!name){
+            return { success: false, message: 'Name is required' };
+        }
+        const connection = await createConnection();
+
+        await connection.execute(
+            'INSERT INTO categories (name) VALUES (?)',
+            [name]
         );
 
         return { success: true };

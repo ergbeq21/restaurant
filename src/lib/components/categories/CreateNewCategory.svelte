@@ -3,18 +3,13 @@
 	import { enhance } from '$app/forms';
 
 
-	let { open = $bindable(),categories } = $props();
+	let { open = $bindable() } = $props();
 
     let name = $state('');
-    let description = $state('');
-    let price = $state(null);
-    let image = $state(null);
-	let category = $state('');
-
     let isValid = $state(false);
 
     $effect(()=>{
-        isValid = name !== '' && price !== null && image !== null && category !== '';
+        isValid = name !== '';
     })
 
     let loading = $state(false);
@@ -27,7 +22,7 @@
 		<h2 class="mb-4 text-lg font-semibold">Create New Produkt</h2>
 
 		<form
-			action="?/createProdukt"
+			action="?/createCategory"
 			method="POST"
             enctype="multipart/form-data"
 			use:enhance={() => {
@@ -40,31 +35,8 @@
 			}}
 		>
 			<div class="space-y-3">
-				<label for="name">Produkt Name</label>
-				<input type="text" name="name" class="w-full rounded-lg border p-2" placeholder="Produkt name" required bind:value={name}/>
-
-				<label for="description">Produkt Beschreibung <span class="text-gray-500">(optional)</span></label>
-				<input
-					type="text"
-					name="description"
-					class="w-full rounded-lg border p-2"
-					placeholder="Produkt beschreibung"
-					bind:value={description}
-				/>
-
-				<label for="price">Produkt Preis</label>
-				<input type="number" name="price" class="w-full rounded-lg border p-2" placeholder="Produkt preis" required bind:value={price}/>
-
-				<label for="category">Produkt Kategorie</label>
-				<select name="category" class="w-full rounded-lg border p-2" required bind:value={category}>
-					<option value="" disabled selected>Wähle eine Kategorie</option>
-					{#each categories as category}
-						<option value={category.id}>{category.name}</option>
-					{/each}
-				</select>
-
-				<label for="image">Produkt Bild</label>
-		        <input type="file" name="image" class="w-full rounded-lg border text-gray-500 p-2 bg-white" required bind:value={image}/>
+				<label for="name">Category Name</label>
+				<input type="text" name="name" class="w-full rounded-lg border p-2" placeholder="Category name" required bind:value={name}/>
 			</div>
 
 			<div class="mt-6 flex justify-end gap-2">
