@@ -16,10 +16,10 @@
     //delete category modal
     let deleteCategory = $state(false);
     let categorieToDelete = $state(null);
-    let currentCategory = $state('');
 
-    //categorie erstellen
-    let chosenCategoryId = $state('');
+    //produkt erstellen mit dem gewahlten category
+    let chosenCategoryId = $state('')
+ 
 </script>
 
 {#if createNewProdukt}
@@ -59,56 +59,32 @@
             </button>
         </section>
 
-        <!-- Categories Row Scroll -->
-        <!-- <section class="w-full overflow-x-auto mb-6">
-        <div class="flex gap-4 px-2">
-            <button class={`${currentCategory === '' ? 'border-orange-600 text-orange-600' : 'border-gray-200' } flex cursor-pointer flex-col items-center justify-center min-w-[120px] rounded-2xl border  p-3 bg-white shadow-sm`}
-            onclick={createCategoryFilter}
-            >
-                Alle Categories
-            </button>
-            {#each data.fixCategories as categorie}
-            <button class={`${currentCategory === categorie.name ? 'border-orange-600 text-orange-600' : 'border-gray-200' } flex flex-col items-center justify-center min-w-[120px] rounded-2xl border  p-3 bg-white shadow-sm`}
-            onclick={() => setQueryParameter(categorie.name)}
-            >
-                <span class="font-medium ">{categorie.name}</span>
-            </button>
-            {/each}
-        </div>
-        </section> -->
-
 
         {#if data.products.length > 0 && data.categories.length > 0}
 
-       {#each data.categories as category}
-        <section class="mb-8">
+            {#each data.categories as category}
+                <section class="mb-8">
 
-            <h2 class="mb-4 text-2xl font-bold text-gray-800 flex flex-row items-center justify-start gap-4">
-                {category.name}
-                <span class="flex flex-row gap-2">
-                    <button class="cursor-pointer"><ChevronLeft /></button>
-                    <button class="cursor-pointer"><ChevronRight /></button>
-                </span>
-            </h2>
-            <div class="flex gap-4">
-            <button
-                class="h-48 w-48 flex-shrink-0 cursor-pointer rounded-lg border-2 border-dashed border-orange-400 bg-orange-50 flex flex-col items-center justify-center gap-2 text-gray-700 hover:bg-orange-100 transition"
-                onclick={() => (createNewProdukt = true, chosenCategoryId = category.id)}
-            >
-                <CirclePlus size={28} class="text-orange-500" />
-                <span class="text-center text-base font-semibold">Add new produkt in {category.name}</span>
-            </button>
+                    <h2 class="mb-4 text-2xl font-bold text-gray-800 flex flex-row items-center justify-start gap-4">
+                        {category.name}
+                    </h2>
+                    <div class="flex gap-4">
+                    <button
+                        class="h-48 w-48 flex-shrink-0 cursor-pointer rounded-lg border-2 border-dashed border-orange-400 bg-orange-50 flex flex-col items-center justify-center gap-2 text-gray-700 hover:bg-orange-100 transition"
+                        onclick={() => (createNewProdukt = true, chosenCategoryId = category.id)}
+                    >
+                        <CirclePlus size={28} class="text-orange-500" />
+                        <span class="text-center text-base font-semibold">Add new produkt in {category.name}</span>
+                    </button>
 
-            <div class="flex gap-4 overflow-x-auto">
-                {#each data.products.filter(product => product.category === category.name) as product}
-                    <Produkt produkt={product}/>
-                {/each}
-            </div>
-            </div>
-        </section>
-        {/each} 
-
-
+                    <div class="flex gap-4 overflow-x-auto">
+                        {#each data.products.filter(product => product.category === category.name) as product}
+                            <Produkt produkt={product}/>
+                        {/each}
+                    </div>
+                    </div>
+                </section>
+            {/each} 
 
 
         {:else if data.categories.length == 0}

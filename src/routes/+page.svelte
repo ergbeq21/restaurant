@@ -1,5 +1,5 @@
 <script>
-	import Produkt from '$lib/components/products/Produkt.svelte';
+	import ProduktCard from '$lib/components/home/ProduktCard.svelte';
 	import { PackageOpen, LogIn } from 'lucide-svelte';
 
 	let { data } = $props();
@@ -25,9 +25,9 @@
 		<h2 class="mb-6 text-xl font-semibold text-gray-900">Available Products</h2>
 
 		{#if data.products.length > 0}
-			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			<div class="grid grid-cols-4 gap-6">
 				{#each data.products as produkt}
-					<Produkt {produkt} isForAdmin={false} />
+					<ProduktCard {produkt} isForAdmin={false} />
 				{/each}
 			</div>
 		{:else}
