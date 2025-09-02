@@ -33,7 +33,7 @@
 		bind:value={searchTerm}
 		oninput={(e) => debounceSearch()}
 		placeholder="Search products..."
-		class="h-9 w-70 rounded border py-1 pr-8 pl-7 text-sm border-gray-400"
+		class="h-9 w-70 rounded border border-gray-400 py-1 pr-8 pl-7 text-sm"
 	/>
 
 	{#if searchTerm}

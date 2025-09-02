@@ -16,32 +16,34 @@
 	<DeleteProdukt {produkt} bind:open={openDeleteProdukt} />
 {/if}
 
-<div class="flex flex-col gap-1 border border-gray-200 bg-white">
-	<img src={produkt.bild_url} alt={produkt.name} class="h-40 w-full object-cover" />
+<div
+	class="flex h-48 w-48 flex-shrink-0 flex-col gap-1 overflow-hidden rounded-lg border border-gray-200 bg-white"
+>
+	<img src={produkt.bild_url} alt={produkt.name} class="h-28 w-full object-cover" />
 
-	<div class="flex flex-row items-end justify-between">
+	<div class="flex--row flex items-center justify-between">
 		<div class="flex flex-col gap-1 p-2">
-			<h2 class="line-clamp-1 text-lg font-semibold text-gray-900">{produkt.name}</h2>
-			<p class="mt-1 text-base font-semibold text-gray-800">{produkt.preis} €</p>
-			<p>{produkt.category}</p>
+			<h2 class="line-clamp-1 text-sm font-semibold text-gray-900">{produkt.name}</h2>
+			<p class="text-xs font-semibold text-gray-800">{produkt.preis} €</p>
+			<p class="line-clamp-1 text-xs text-gray-500">{produkt.category}</p>
 		</div>
 
 		{#if isForAdmin}
-			<div class="mt-2 flex gap-2">
+			<div class="mt-auto flex justify-end gap-1 px-2 pb-2">
 				<button
 					onclick={() => (openEditProdukt = true)}
-					class="flex items-center justify-center rounded-lg p-2 text-blue-600 transition hover:bg-blue-50"
+					class="flex items-center justify-center rounded p-1 text-blue-600 transition hover:bg-blue-50"
 					aria-label="Edit"
 				>
-					<SquarePen size={20} />
+					<SquarePen size={16} />
 				</button>
 
 				<button
 					onclick={() => (openDeleteProdukt = true)}
-					class="flex items-center justify-center rounded-lg p-2 text-red-600 transition hover:bg-red-50"
+					class="flex items-center justify-center rounded p-1 text-red-600 transition hover:bg-red-50"
 					aria-label="Delete"
 				>
-					<Trash2 size={20} />
+					<Trash2 size={16} />
 				</button>
 			</div>
 		{/if}

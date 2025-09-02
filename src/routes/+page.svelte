@@ -13,7 +13,7 @@
 		<h1 class="text-2xl font-bold text-gray-800">Unsere Produkts</h1>
 	</div>
 	<a
-		href="/login"
+		href="/admin/products"
 		class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700"
 	>
 		<LogIn size={18} /> Login

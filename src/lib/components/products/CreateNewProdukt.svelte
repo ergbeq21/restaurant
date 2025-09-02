@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 
-	let { open = $bindable(), categories } = $props();
+	let { open = $bindable(), categories, chosenCategoryId = $bindable() } = $props();
 
 	let name = $state('');
 	let description = $state('');
 	let price = $state(null);
 	let image = $state(null);
-	let category = $state('');
 
 	let isValid = $state(false);
 
 	$effect(() => {
-		isValid = name !== '' && price !== null && image !== null && category !== '';
+		isValid = name !== '' && price !== null && image !== null;
 	});
 
 	let loading = $state(false);
@@ -32,6 +31,7 @@
 					await update({ reset: false });
 					open = false;
 					loading = false;
+					chosenCategoryId = '';
 				};
 			}}
 		>
@@ -67,13 +67,8 @@
 					bind:value={price}
 				/>
 
-				<label for="category">Produkt Kategorie</label>
-				<select name="category" class="w-full rounded-lg border p-2" required bind:value={category}>
-					<option value="" disabled selected>Wähle eine Kategorie</option>
-					{#each categories as category}
-						<option value={category.id}>{category.name}</option>
-					{/each}
-				</select>
+
+				<input type="hidden" name="category" value={chosenCategoryId}>
 
 				<label for="image">Produkt Bild</label>
 				<input
@@ -88,7 +83,7 @@
 			<div class="mt-6 flex justify-end gap-2">
 				<button
 					type="reset"
-					onclick={() => (open = false)}
+					onclick={() => ((open = false), (chosenCategoryId = ''))}
 					class="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
 				>
 					Abbrechen

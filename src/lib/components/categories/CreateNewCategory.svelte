@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import { enhance } from '$app/forms';
 
 	let { open = $bindable() } = $props();
@@ -7,15 +7,16 @@
 	let isValid = $state(false);
 
 	$effect(() => {
-		isValid = name !== '';
+		isValid = name.trim() !== '';
 	});
 
 	let loading = $state(false);
 </script>
 
-<div class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-	<div class="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-lg dark:bg-gray-200">
-		<h2 class="mb-4 text-lg font-semibold">Create New Produkt</h2>
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+	<div class="w-full max-w-lg transform rounded-2xl bg-white p-6 shadow-2xl">
+		<h2 class="mb-2 text-xl font-bold">Create New Category</h2>
+		<p class="mb-6 text-sm">Please provide the details to set up the new category.</p>
 
 		<form
 			action="?/createCategory"
@@ -29,38 +30,40 @@
 					loading = false;
 				};
 			}}
+			class="space-y-5"
 		>
-			<div class="space-y-3">
-				<label for="name">Category Name</label>
+			<div>
+				<label for="name" class="mb-1 block text-sm font-medium"> Category Name </label>
 				<input
+					id="name"
 					type="text"
 					name="name"
-					class="w-full rounded-lg border p-2"
-					placeholder="Category name"
+					placeholder="Enter category name"
 					required
 					bind:value={name}
+					class="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-800 shadow-sm"
 				/>
 			</div>
 
-			<div class="mt-6 flex justify-end gap-2">
+			<div class="flex justify-end gap-3 pt-4">
 				<button
 					type="reset"
 					onclick={() => (open = false)}
-					class="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
+					class="rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
 				>
-					Abbrechen
+					Cancel
 				</button>
 				<button
 					disabled={!isValid || loading}
-					class={`flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-white transition 
-                        ${isValid && !loading ? 'bg-red-600 hover:bg-red-700' : 'cursor-not-allowed bg-red-300'}`}
+					class={`flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white shadow transition 
+                        ${isValid && !loading ? 'bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-red-400' : 'cursor-not-allowed bg-red-300'}`}
 				>
 					{#if loading}
 						<div
 							class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
 						></div>
 					{/if}
-					<span>Speichern</span>
+					<span>{loading ? 'Creating...' : 'Create'}</span>
 				</button>
 			</div>
 		</form>

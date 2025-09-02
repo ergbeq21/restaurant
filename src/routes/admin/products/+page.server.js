@@ -10,10 +10,10 @@ export async function load({ locals, url }) {
 	const connection = await createConnection();
 
 	const category = url.searchParams.get('category') || '';
-    const search = (url.searchParams.get('search') || '').trim();
+	const search = (url.searchParams.get('search') || '').trim();
 
 	let query = `
-    SELECT items.name, items.beschreibung, items.preis, items.bild_url, categories.name as category
+    SELECT items.id, items.name, items.beschreibung, items.preis, items.bild_url, categories.name as category
     FROM items
     JOIN categories ON items.kategorie_id = categories.id
     `;
@@ -26,18 +26,22 @@ export async function load({ locals, url }) {
 	}
 
 	if (search) {
-        query += category ? ' AND' : ' WHERE';
-        query += ' LOWER(items.name) LIKE ? ';
-        params.push(`%${search}%`);
-    }
-    
+		query += category ? ' AND' : ' WHERE';
+		query += ' LOWER(items.name) LIKE ? ';
+		params.push(`%${search}%`);
+	}
+
 	const [productRows] = await connection.execute(query, params);
 
-	const [categoryRows] = await connection.execute('SELECT * FROM categories;');
+	const [categoryRows] = await connection.execute(
+		'SELECT categories.id, categories.name, count(items.id) as product_count FROM categories LEFT JOIN items ON categories.id = items.kategorie_id GROUP BY categories.id;'
+	);
+
 
 	return {
 		products: productRows,
-		categories: categoryRows
+		categories: categoryRows,
+		user: locals.user
 	};
 }
 
@@ -63,6 +67,7 @@ export const actions = {
 		const id = Number(formData.get('id'));
 
 		const connection = await createConnection();
+		console.log(id);
 
 		await connection.execute('DELETE FROM items WHERE id = ?', [id]);
 
@@ -73,10 +78,9 @@ export const actions = {
 		const name = formData.get('name');
 		const description = formData.get('description');
 		const price = Number(formData.get('price'));
-		const category = formData.get('category');
+		const category = Number(formData.get('category'));
 		const image = formData.get('image');
 
-		console.log(image);
 		const { url } = await put('restaurant_app/' + image.name, image, {
 			access: 'public',
 			token: BLOB_READ_WRITE_TOKEN,
@@ -103,6 +107,20 @@ export const actions = {
 		const connection = await createConnection();
 
 		await connection.execute('INSERT INTO categories (name) VALUES (?)', [name]);
+
+		return { success: true };
+	},
+	deleteCategorie: async ({ request }) => {
+		const formData = await request.formData();
+		const categorieId = formData.get('categorieId');
+
+		if (!categorieId) {
+			return { success: false, message: 'No categories selected' };
+		}
+
+		const connection = await createConnection();
+
+		await connection.execute('DELETE FROM categories WHERE id = ?', [categorieId]);
 
 		return { success: true };
 	}
