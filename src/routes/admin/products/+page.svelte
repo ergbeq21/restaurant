@@ -2,8 +2,6 @@
 	import CreateNewCategory from '$lib/components/categories/CreateNewCategory.svelte';
 	import CreateNewProdukt from '$lib/components/products/CreateNewProdukt.svelte';
 	import Produkt from '$lib/components/products/Produkt.svelte';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/state';
 	import { Plus,Tags,CirclePlus,ChevronRight,ChevronLeft } from 'lucide-svelte';
 	import SearchProdukts from '$lib/components/products/SearchProdukts.svelte';
 	import DeleteCategories from '$lib/components/categories/DeleteCategories.svelte';

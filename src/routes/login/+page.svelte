@@ -12,7 +12,7 @@
 	>
 		<h1 class="mb-6 text-center text-2xl font-semibold text-gray-800">Login</h1>
 
-		<label for="email" class="mb-2 block text-sm font-medium text-gray-700">E-Mail</label>
+		<label for="email" class="mb-2 block text-sm font-medium text-gray-700">E-Mail morkar</label>
 		<input
 			type="text"
 			name="email"
@@ -35,5 +35,6 @@
 			class="w-full rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
 			>Login</button
 		>
+		<a href="/register" class="mt-4 inline-block text-center text-sm text-blue-500 hover:underline">Don't have an account? Register</a>
 	</form>
 </div>

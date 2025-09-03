@@ -1,11 +1,14 @@
 import { createConnection } from '$lib/db/mysql';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export async function load({ locals, url }) {
-	if (!locals.user || locals.user.role !== 'admin') {
-		redirect(302, '/');
+
+    if(!locals.user){
+        redirect(302, '/login');
+    } else if (locals.user.role !== 'admin'){
+        throw error(403, 'Access denied');
 	}
 	const connection = await createConnection();
 

@@ -1,3 +1,4 @@
+
 <script>
 	import ProduktCard from '$lib/components/home/ProduktCard.svelte';
 	import { PackageOpen, LogIn } from 'lucide-svelte';
@@ -10,14 +11,58 @@
 >
 	<div class="flex items-center gap-2">
 		<PackageOpen class="text-blue-600" size={28} />
-		<h1 class="text-2xl font-bold text-gray-800">Unsere Produkts</h1>
+		<h1 class="text-2xl font-bold text-gray-800">ADA Beach Bar Menu</h1>
 	</div>
+
+    {#if data.user?.role === 'admin'}
+	<div class="flex flex-row gap-1">
 	<a
 		href="/admin/products"
+		class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-1 text-white shadow hover:bg-blue-700"
+	>
+		<LogIn size={15} /> Admin
+	</a>
+	<div class="flex flex-col">
+				<form action="/logout?/logout" method="POST">
+					<button
+						class="mt-1 w-fit cursor-pointer rounded-lg bg-red-500 px-3 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-red-600"
+					>
+						Logout
+					</button>
+				</form>
+			</div>
+	</div>
+
+    {:else if !data.user}
+	<a
+		href="/login"
 		class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white shadow hover:bg-blue-700"
 	>
 		<LogIn size={18} /> Login
 	</a>
+	{:else if data.user}
+
+		<div class="flex items-center gap-4">
+
+			<div class="bg-blue-500 w-14 h-14 flex items-center justify-center rounded-full shadow-md">
+				<p class="uppercase text-white font-semibold text-sm">
+					{data.user.username.slice(0, 2)}
+				</p>
+			</div>
+
+			<div class="flex flex-col">
+				<form action="/logout?/logout" method="POST">
+					<button
+						class="mt-1 w-fit cursor-pointer rounded-lg bg-red-500 px-3 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-red-600"
+					>
+						Logout
+					</button>
+				</form>
+			</div>
+		</div>
+
+
+	{/if}
 </header>
 
 <main class="px-6 py-8">
@@ -27,7 +72,7 @@
 		{#if data.products.length > 0}
 			<div class="grid grid-cols-4 gap-6">
 				{#each data.products as produkt}
-					<ProduktCard {produkt} isForAdmin={false} />
+					<ProduktCard {produkt} isForAdmin={false} user={data.user}/>
 				{/each}
 			</div>
 		{:else}
