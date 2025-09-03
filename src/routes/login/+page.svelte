@@ -35,6 +35,8 @@
 			class="w-full rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
 			>Login</button
 		>
-		<a href="/register" class="mt-4 inline-block text-center text-sm text-blue-500 hover:underline">Don't have an account? Register</a>
+		<a href="/register" class="mt-4 inline-block text-center text-sm text-blue-500 hover:underline"
+			>Don't have an account? Register</a
+		>
 	</form>
 </div>

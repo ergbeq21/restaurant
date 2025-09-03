@@ -4,11 +4,10 @@ import { put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export async function load({ locals, url }) {
-
-    if(!locals.user){
-        redirect(302, '/login');
-    } else if (locals.user.role !== 'admin'){
-        throw error(403, 'Access denied');
+	if (!locals.user) {
+		redirect(302, '/login');
+	} else if (locals.user.role !== 'admin') {
+		throw error(403, 'Access denied');
 	}
 	const connection = await createConnection();
 
@@ -39,7 +38,6 @@ export async function load({ locals, url }) {
 	const [categoryRows] = await connection.execute(
 		'SELECT categories.id, categories.name, count(items.id) as product_count FROM categories LEFT JOIN items ON categories.id = items.kategorie_id GROUP BY categories.id;'
 	);
-
 
 	return {
 		products: productRows,
